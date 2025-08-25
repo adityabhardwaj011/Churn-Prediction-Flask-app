@@ -13,7 +13,7 @@ model = joblib.load('churn_prediction_pipeline.joblib')
 # Route for the home page.
 @app.route('/')
 def home():
-    return render_template('index.html')
+    return render_template('index.html', form_data= {}) # to display an empty form
 
 
 # Route for the prediction page.
@@ -47,7 +47,7 @@ def predict():
         confidence = f"Confidence: {prediction_proba[0][0]:.2%}"
 
     # Render the index.html page with the prediction result.
-    return render_template('index.html', prediction_text=output_message, confidence_text=confidence)
+    return render_template('index.html', prediction_text=output_message, confidence_text=confidence, form_data=request.form) # to display the form user filled with the result
 
 if __name__ == "__main__": # This line checks, "Is this script being run directly?" If it is, then __name__ will be "__main__", the condition will be true, and the web server will start. This prevents the server from starting automatically if you were to just import this file into another script.
     app.run(debug=True)
