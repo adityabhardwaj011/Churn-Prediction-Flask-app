@@ -3,9 +3,9 @@ import pandas as pd
 from flask import Flask, request, render_template
 import joblib
 
-# Createing an app object
-app = Flask(__name__)
-
+# Creating an app object
+app = Flask(__name__) # Think of __name__ can be seen as the "home address" we give to Flask. If we give it something else, it won't be able to find its way back to its files. Using the special __name__ variable ensures that Flask always knows the correct location of your app.py script and templates etc. no matter how or where we run it from.
+# It's a special, built-in Python variable that holds the name of the current Python script (or module). 
 # Load the trained model from the file.
 model = joblib.load('churn_prediction_pipeline.joblib')
 
@@ -21,20 +21,20 @@ def home():
 def predict():
 
     # Get the input values from the form.
-    # The keys must match the 'name' attributes of your form's input fields.
+    # The keys must match the 'name' attributes of our form's input fields.
     input_features = [request.form.get(key) for key in model.feature_names_in_]
 
-    # Convert the input to a DataFrame.
+    # Convert the input into a DataFrame cause that's what the model expects
     features_df = pd.DataFrame([input_features], columns=model.feature_names_in_)
 
+    # data from HTML always comes as TEXT
     # The model expects numerical types for these columns, so we convert them.
-    # This is a crucial step if your form sends everything as text.
     numerical_cols = ['SeniorCitizen', 'tenure', 'MonthlyCharges', 'TotalCharges']
     for col in numerical_cols:
         if col in features_df.columns:
             features_df[col] = pd.to_numeric(features_df[col], errors='coerce')
 
-    # Make a prediction.
+    # Making a prediction.
     prediction = model.predict(features_df)
     prediction_proba = model.predict_proba(features_df)
 
@@ -49,7 +49,5 @@ def predict():
     # Render the index.html page with the prediction result.
     return render_template('index.html', prediction_text=output_message, confidence_text=confidence)
 
-
-# This is the standard boilerplate that runs the application.
-if __name__ == "__main__":
+if __name__ == "__main__": # This line checks, "Is this script being run directly?" If it is, then __name__ will be "__main__", the condition will be true, and the web server will start. This prevents the server from starting automatically if you were to just import this file into another script.
     app.run(debug=True)
