@@ -2,7 +2,7 @@
 
 A web application that predicts customer churn using a machine learning model trained on the Telco Customer Churn dataset. This project takes a raw dataset, preprocesses it, trains a Random Forest Classifier, and deploys it as an interactive web app using Flask.
 
-![Demo Image]("./assets/churn_no_churn.gif")
+![Demo Image](./assets/churn_no_churn.gif)
 
 ---
 
