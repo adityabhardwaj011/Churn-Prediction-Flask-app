@@ -24,6 +24,12 @@ A web application that predicts customer churn using a machine learning model tr
 
 ---
 
+## 🧠 Model Training
+
+The machine learning model was trained in a Kaggle environment. The complete data exploration, feature engineering, and training process can be found in the `churn-no-churn-prediction.ipynb` notebook in this repository.
+
+---
+
 ## 🚀 Getting Started
 
 Follow these instructions to get a copy of the project up and running on your local machine.
